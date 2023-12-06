@@ -1,0 +1,40 @@
+-- Criação do banco de dados
+CREATE DATABASE IF NOT EXISTS Fuel;
+
+-- Uso do banco de dados
+USE Fuel;
+
+-- Tabela para informações do carro
+CREATE TABLE IF NOT EXISTS tbCarro (
+    idCarro INT PRIMARY KEY AUTO_INCREMENT,
+    placa VARCHAR(10) NOT NULL,
+    modelo VARCHAR(50) NOT NULL,
+    cor VARCHAR(20),
+    ano INT,
+    combustivel VARCHAR(20),
+    km INT
+);
+
+-- Tabela para informações do posto
+CREATE TABLE IF NOT EXISTS tbPosto (
+    idPosto INT PRIMARY KEY AUTO_INCREMENT,
+    nomePosto VARCHAR(50) NOT NULL,
+    cnpj VARCHAR(14) NOT NULL,
+    endereco VARCHAR(100),
+    cidade VARCHAR(50),
+    estado VARCHAR(2)
+);
+
+
+-- Tabela para registros de abastecimento
+CREATE TABLE IF NOT EXISTS tbAbastecimento (
+    idAbastecimento INT PRIMARY KEY AUTO_INCREMENT,
+    dataAbastecimento DATE,
+    valorCombustivel DOUBLE(8, 2),
+    qtdCombustivel INT,
+    tipoCombustivel VARCHAR(20),
+    placaDoCarro VARCHAR(10),
+    cnpjDoPosto VARCHAR(14),
+    FOREIGN KEY (placaDoCarro) REFERENCES tbCarro(placa),
+    FOREIGN KEY (cnpjDoPosto) REFERENCES tbPosto(cnpj)
+);
